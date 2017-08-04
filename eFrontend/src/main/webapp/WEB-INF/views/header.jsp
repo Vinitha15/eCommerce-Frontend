@@ -31,6 +31,10 @@ html,body
 {
 height:100%;
 }
+.fx{
+position:fixed;
+z-index:9
+}
 
 div.container a {
 	color: black;
@@ -132,6 +136,9 @@ nav a:hover {
 			</div>
 			<div class="collapse navbar-collapse" id="collapse-example">
 				<ul class="nav navbar-nav">
+					<security:authorize access="hasRole('ROLE_USER')">
+					<li><a href="#">Hi ${pageContext.request.userPrincipal.name}!!</a></li>
+					</security:authorize>
 					<c:url value="/home" var="url1"></c:url>
 					<li><a href="${url1}">Home</a></li>
 					<li><a href="${url2}">About Us</a></li>
@@ -166,12 +173,19 @@ nav a:hover {
 					
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><span class="glyphicon glyphicon-search"></span>Search</a></li>
 					<c:url value="/all/RegistrationForm" var="action"></c:url>
 					<c:if test="${pageContext.request.userPrincipal.name==null }">
 					<li><a href="${action }"><span
 							class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 					</c:if>
+					
+					<c:if test="${pageContext.request.userPrincipal.name!=null }">
+					<security:authorize access="hasRole('ROLE_USER')">
+					 <c:url value="/cart/getcart" var="cart"></c:url>
+					<li><a href="${cart}"><span class="glyphicon glyphicon-shopping-cart" ></span>Cart ${count}</a></li>
+				   </security:authorize> 
+				   </c:if>
+					
 					<c:if test="${pageContext.request.userPrincipal.name==null }">
 					<c:url value="/login" var="login"></c:url>
 					<li><a href="${login}"><span class="glyphicon glyphicon-log-in"></span>
@@ -182,13 +196,6 @@ nav a:hover {
 					<li><a href="${logout}"><span class="glyphicon glyphicon-log-out"></span>
 							Logout</a></li>
 					</c:if>
-					<c:if test="${pageContext.request.userPrincipal.name!=null }">
-					<security:authorize access="hasRole('ROLE_USER')">
-					 <c:url value="/cart/getcart" var="cart"></c:url>
-					<li><a href="${cart}"><span class="glyphicon glyphicon-shopping-cart"></span>Cart</a></li>
-				   </security:authorize> 
-				   </c:if>
-					
 				</ul>
 			</div>
 		</div>

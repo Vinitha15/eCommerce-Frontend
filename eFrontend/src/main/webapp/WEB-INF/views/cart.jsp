@@ -29,12 +29,19 @@
 			<c:forEach items="${i.cartitems}" var="c">
 			<tr>
 			<td>${c.products.productName}</td>
-			<td>${c.quantity}</td>
+			<td><c:url value="/cart/minus/${c.products.id}" var="minus"></c:url>
+			<a href="${minus}"><span class="glyphicon glyphicon-minus-sign"> </span></a>
+			<input type="text" value="${c.quantity}" style="width: 36px; text-align: center;">
+			<c:url value="/cart/plus/${c.products.id}" var="plus"></c:url>
+			<a href="${plus}"><span class="glyphicon glyphicon-plus-sign"> </span></a></td>
 			<td>${c.totalprice}</td>
 			<td><c:url value="/cart/removecartitem/${c.id}" var="remove"></c:url>
 			<c:set var="grandtotal" value="${c.totalprice + grandtotal}"></c:set>
 			<a href="${remove}" class="label label-danger pull-left" ><span
 			class="glyphicon glyphicon-remove"></span>Remove</a></td>
+			<td> 
+			${msg}
+			</td>
 			</tr>
 			</c:forEach>
 			</tbody>

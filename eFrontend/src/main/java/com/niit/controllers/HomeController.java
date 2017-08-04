@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.niit.model.Product;
+import com.niit.service.CartItemService;
 import com.niit.service.ProductService;
 
 @Controller
@@ -19,16 +20,20 @@ public class HomeController {
 	@Autowired
 	private ProductService productservice;
 	
+	@Autowired
+	private CartItemService cartitemservice;
+	
 	@RequestMapping("/home")
 	public String homePage(HttpSession session,Model model)
 	{
 		session.setAttribute("categories", productservice.getallcategories());
 		List<Product> products=productservice.getallproducts();
 		model.addAttribute("product", products);
+		
 		return "slider";
 	}
 	@RequestMapping("/aboutus")
-	public String aboutus()
+	public String aboutus(Model model)
 	{
 		
 		return "aboutus";

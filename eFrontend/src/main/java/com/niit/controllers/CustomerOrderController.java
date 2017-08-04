@@ -36,8 +36,6 @@ public class CustomerOrderController {
 		String username=user.getUsername();
 		Customer customer=customerservice.customerbyusername(username);
 		Cart cart=customer.getCart();
-		//Cart cart= cartitemservice.getCart(id);
-		//Customer customer= cart.getCustomer(); 
 		model.addAttribute("shippingaddress",customer.getShippingaddress());
 		model.addAttribute("Cartid",cart.getId());
 		return "shippingaddress";
@@ -50,8 +48,6 @@ public class CustomerOrderController {
 		String username=user.getUsername();
 		Customer customer=customerservice.customerbyusername(username);
 		Cart cart=customer.getCart();
-		//Cart cart= cartitemservice.getCart(id);
-		//Customer customer= cart.getCustomer();
 		customer.setShippingaddress(shippingaddress);
 		cart.setCustomer(customer);
 		CustomerOrder customerorder= customerorderservice.Createorder(cart);
@@ -61,12 +57,17 @@ public class CustomerOrderController {
 	}
 	
 	@RequestMapping("/cart/confirm")
-	public String confirm(@ModelAttribute CustomerOrder customerorder){
+	public String confirm(@ModelAttribute CustomerOrder customerorder,Model model){
 		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username=user.getUsername();
 		Customer customer=customerservice.customerbyusername(username);
 		Cart cart=customer.getCart();
-		cartitemservice.removeallcartitem(cart.getId());
+		cartitemservice.aftercheckout(cart.getId());
+		return "payment";
+	}
+	@RequestMapping("/cart/thankyou")
+	public String cash(){
 		return "thankyou";
 	}
+	
 }

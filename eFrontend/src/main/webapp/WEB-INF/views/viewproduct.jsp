@@ -31,7 +31,10 @@
 	<c:if test="${product.quantity!=0 }">
 	<c:url value="/cart/addtocart/${product.id}" var="shop"></c:url>
 		<form action="${shop}">
-			Enter Units<input type="text" name="units"><br>
+			<!-- Enter Units<input type="text" name="units"><br> -->
+			
+			<input type="text" name="units" value="1" style="width: 36px; text-align: center;" hidden />
+			
 			<button type="submit" style="background:none;border:none;padding:0" class="btn btn-default" >
 			<span class="glyphicon glyphicon-shopping-cart"></span>AddToCart</button>
 			</form>

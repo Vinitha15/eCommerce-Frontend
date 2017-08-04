@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.niit.model.Authorities;
 import com.niit.model.Category;
 import com.niit.model.Product;
+import com.niit.service.CartItemService;
 import com.niit.service.ProductService;
 
 @Controller
@@ -32,13 +33,17 @@ public class ProductController {
 	@Autowired
 	private ProductService productservice;
 	
+	@Autowired
+	private CartItemService cartitemservice;
+	
 	@RequestMapping("/admin/products/getproductform")
 	public String getaddproduct(Model model) 
 	{
 		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username=user.getUsername();
-		/*Authorities a= user.getAuthorities();*/
-		System.out.println(username);
+		/*Authorities a= (Authorities) user.getAuthorities();
+		String role=a.getRole();
+		System.out.println(role);*/
 		if(username.equals("admin")){
 		List<Category> categories=productservice.getallcategories();
 		model.addAttribute("categories",categories);
@@ -74,6 +79,7 @@ public String getAllProduct(Model model)
 		{
 			List<Product> products=productservice.getallproducts();
 			model.addAttribute("product", products);
+			
 			return "productlist";
 		}
 
@@ -120,6 +126,7 @@ public String selectbycategory(@RequestParam String searchCondition,Model model)
 		model.addAttribute("searchCondition","");
 	else
 	model.addAttribute("searchCondition",searchCondition);
+	
 	return "productlist";
 }
 

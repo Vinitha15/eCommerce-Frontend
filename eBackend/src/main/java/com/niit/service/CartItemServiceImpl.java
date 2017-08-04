@@ -31,4 +31,14 @@ public class CartItemServiceImpl implements CartItemService {
 		return cartitemdao.getCart(id);
 	}
 
+	public void aftercheckout(int cartid) {
+		cartitemdao.aftercheckout(cartid);
+		
+	}
+
+	public int getcartcount(int id) {
+		return cartitemdao.getcartcount(id);
+	}
+	
+
 }
