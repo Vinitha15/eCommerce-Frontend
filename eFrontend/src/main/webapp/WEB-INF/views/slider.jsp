@@ -27,33 +27,14 @@
 #f1_container1 {
 	perspective: 1000;
 }
-/* #f1_card1 {
-	width: 20px;
-	height: 100%;
-	transform-style: preserve-3d;
-	transition: all 1.0s linear;
-} */
-/* #f1_container1:hover #f1_card1 {
-	transform: rotateY(180deg);
-	box-shadow: -5px 5px 5px #aaa;
-} */
+
 .face {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	backface-visibility: hidden;
 }
-/* .face.back {
-	display: block;
-	transform: rotateY(180deg);
-	box-sizing: border-box;
-	padding: 10px;
-	color: white;
-	text-align: center;
-	background-color:#8986d8;
-}
- */.proname{
-	/* background-color: black; */
+.proname{
 	font-size: 15px;
 	color: blue;
 	text-align: center;
@@ -69,11 +50,7 @@
 	text-align: center; 
 }
  
-/*   .row{
-	margin: 10px 10px; 
-} */
- 
- </style>	
+</style>	
 
 <div id="wowslider-container1">
 	<div class="ws_images">

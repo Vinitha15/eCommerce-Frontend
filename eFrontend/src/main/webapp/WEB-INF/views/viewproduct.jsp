@@ -6,6 +6,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Product</title>
+<style type="text/css">
+p{
+color:red;
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+}
+.font
+{
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+}
+</style>
 </head>
 <body>
 	<center>
@@ -17,35 +27,37 @@
 			<tr>
 				<c:url value="/resources/images/${product.id }.png" var="image"></c:url>
 			<td colspan="2"><img src="${image}" height="300" width="250"/></td>
-			<td>ProductName   ${product.productName}<br><br>
-			    Category      ${product.category.categoryName}<br><br>
-			    Price         ${product.price}<br><br>
-			    Description   ${product.description}<br><br>
+			<td class="font">ProductName&nbsp&nbsp   ${product.productName}<br><br>
+			    Category&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp     ${product.category.categoryName}<br><br>
+			    Price&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp    ${product.price}<br><br>
+			    Description&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  ${product.description}<br><br>
 			</tr>
-		
-	</table>
-	<c:if  test="${product.quantity==0 }">
-	Out Of Stock
-	</c:if>
-	<security:authorize access="hasRole('ROLE_USER')">
-	<c:if test="${product.quantity!=0 }">
+		</table>
+		<c:if test="${product.quantity!=0 }">
 	<c:url value="/cart/addtocart/${product.id}" var="shop"></c:url>
 		<form action="${shop}">
 			<!-- Enter Units<input type="text" name="units"><br> -->
 			
 			<input type="text" name="units" value="1" style="width: 36px; text-align: center;" hidden />
 			
-			<button type="submit" style="background:none;border:none;padding:0" class="btn btn-default" >
+			<button type="submit"  class="btn btn-warning pull-left" >
 			<span class="glyphicon glyphicon-shopping-cart"></span>AddToCart</button>
 			</form>
 	</c:if>
-	</security:authorize>
+	
 	<c:url value="/all/products/getallproducts" var="action"></c:url>
 		<form action="${action}">
-			<button type="submit"  class="btn btn-success center-block" >
+			<button type="submit"  class="btn btn-success pull-right" >
 			<span class="glyphicon glyphicon-eye-open"></span>Back</button>
 			</form>
+		
+
+	
+	<c:if  test="${product.quantity==0 }">
+	<center><p>Out Of Stock</p></center>
+	</c:if>
+	
 	</div><br>
 </body>
 </html>
-<%-- <%@ include file="footer.jsp"%> --%>
+ <%@ include file="footer.jsp"%> 

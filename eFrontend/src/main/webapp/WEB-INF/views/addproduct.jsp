@@ -6,14 +6,10 @@
 <head>
 <title>Product Form</title>
 <style type="text/css">
-
-
 body {
   height: 700px;
   
 }
-
-
 </style>
 </head>
 <body style="background-color: powderblue;">
@@ -40,7 +36,7 @@ body {
 			</div>
 			<div class="form-group">
 				<label>Enter description</label>
-				<form:input type="textarea" path="description" class="form-control"
+				<form:textarea path="description" class="form-control"
 					placeholder="description" id="description"/>
 				<form:errors path="description" cssStyle="color:red"></form:errors>
 			</div>
@@ -66,6 +62,3 @@ body {
 	
 </body>
 </html>
-
-
- 

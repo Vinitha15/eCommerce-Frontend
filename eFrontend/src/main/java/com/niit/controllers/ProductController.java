@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.niit.exception.ProductNotFoundException;
 import com.niit.model.Authorities;
 import com.niit.model.Category;
 import com.niit.model.Product;
@@ -41,17 +42,12 @@ public class ProductController {
 	{
 		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username=user.getUsername();
-		/*Authorities a= (Authorities) user.getAuthorities();
-		String role=a.getRole();
-		System.out.println(role);*/
-		if(username.equals("admin")){
+		
 		List<Category> categories=productservice.getallcategories();
 		model.addAttribute("categories",categories);
 		model.addAttribute("product",new Product());
 		return "addproduct";
-		}
-		else
-			return "denied";
+		
 	}
 @RequestMapping("/admin/saveproduct")
 public String saveproduct(@Valid @ModelAttribute (name="product") Product product,BindingResult result, Model model)
@@ -85,9 +81,12 @@ public String getAllProduct(Model model)
 
 @RequestMapping("/all/products/viewproduct/{id}")
 
-public String getproductbyid(@PathVariable int id,Model model)
+public String getproductbyid(@PathVariable int id,Model model) throws ProductNotFoundException
 {
 	Product product=productservice.getproductbyid(id);
+	
+	if(product==null) throw new ProductNotFoundException(); 
+	
 	model.addAttribute("product",product);
 	return "viewproduct";
 	

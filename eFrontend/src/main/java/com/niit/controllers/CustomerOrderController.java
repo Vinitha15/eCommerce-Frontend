@@ -1,5 +1,10 @@
 package com.niit.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -20,54 +25,71 @@ import com.niit.service.CustomerService;
 
 @Controller
 public class CustomerOrderController {
-	
+
 	@Autowired
 	private CartItemService cartitemservice;
-	
+
 	@Autowired
 	private CustomerService customerservice;
-	
+
 	@Autowired
 	private CustomerOrderService customerorderservice;
-	
+
 	@RequestMapping("/cart/shippingaddressform")
-	public String getShippingform(Model model){
-		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username=user.getUsername();
-		Customer customer=customerservice.customerbyusername(username);
-		Cart cart=customer.getCart();
-		model.addAttribute("shippingaddress",customer.getShippingaddress());
-		model.addAttribute("Cartid",cart.getId());
+	public String getShippingform(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		Customer customer = customerservice.customerbyusername(username);
+		Cart cart = customer.getCart();
+		model.addAttribute("shippingaddress", customer.getShippingaddress());
+		model.addAttribute("Cartid", cart.getId());
 		return "shippingaddress";
-		
+
 	}
-	
+
 	@RequestMapping("/cart/order")
-	public String createorder(@ModelAttribute ShippingAddress shippingaddress,Model model){
-		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username=user.getUsername();
-		Customer customer=customerservice.customerbyusername(username);
-		Cart cart=customer.getCart();
+	public String createorder(@ModelAttribute ShippingAddress shippingaddress, Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		Customer customer = customerservice.customerbyusername(username);
+		Cart cart = customer.getCart();
 		customer.setShippingaddress(shippingaddress);
 		cart.setCustomer(customer);
-		CustomerOrder customerorder= customerorderservice.Createorder(cart);
-		model.addAttribute("order",customerorder);
-		model.addAttribute("Cartid",cart.getId());
+		CustomerOrder customerorder = customerorderservice.Createorder(cart);
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		Date date = customerorder.getDate();
+		Random rand = new Random();
+		int i = 2 + rand.nextInt(3);
+		System.out.println(i);
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DATE, i);
+		String d = sdf.format(c.getTime());
+		System.out.println(d);
+		int dd = c.get(Calendar.DATE);
+		long yy = c.get(Calendar.YEAR);
+		String mm = new SimpleDateFormat("MMM").format(c.getTime());
+		String day = new SimpleDateFormat("EE").format(c.getTime());
+		System.out.println(day + ", " + mm + " " + dd + " " + yy);
+		model.addAttribute("order", customerorder);
+		model.addAttribute("Cartid", cart.getId());
 		return "orderdetails";
 	}
-	
+
 	@RequestMapping("/cart/confirm")
-	public String confirm(@ModelAttribute CustomerOrder customerorder,Model model){
-		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username=user.getUsername();
-		Customer customer=customerservice.customerbyusername(username);
-		Cart cart=customer.getCart();
+	public String confirm(@ModelAttribute CustomerOrder customerorder, Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		Customer customer = customerservice.customerbyusername(username);
+		Cart cart = customer.getCart();
 		cartitemservice.aftercheckout(cart.getId());
 		return "payment";
 	}
+
 	@RequestMapping("/cart/thankyou")
-	public String cash(){
+	public String cash() {
 		return "thankyou";
 	}
-	
+
 }

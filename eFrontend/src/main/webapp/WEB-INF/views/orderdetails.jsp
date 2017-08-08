@@ -7,9 +7,7 @@
 <div class="container-wrapper">
     <div class="container">
         <div class="page-header">
-            <h1>Order</h1>
-
-            <p class="lead">Order confirmation</p>
+         <p class="lead">Order confirmation</p>
         </div>
 
         <div class="container">
@@ -20,7 +18,7 @@
                              <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
 
                        <div class="txt-center">
-                            <h1>Receipt</h1>
+                            <h1>Summary</h1>
                        </div>
                        ORDER ID: ${order.id }
                   
