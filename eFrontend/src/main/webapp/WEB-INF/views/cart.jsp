@@ -28,7 +28,8 @@
 			<tbody>
 			<c:forEach items="${i.cartitems}" var="c">
 			<tr>
-			<td>${c.products.productName}</td>
+			<c:url value="/resources/images/${c.products.id}.png" var="image"></c:url>
+			<td><img src="${image}" height="50" width="70" /> ${c.products.productName}</td>
 			<td><c:url value="/cart/minus/${c.products.id}" var="minus"></c:url>
 			<a href="${minus}"><span class="glyphicon glyphicon-minus-sign"> </span></a>
 			<input type="text" value="${c.quantity}" style="width: 36px; text-align: center;">
@@ -39,14 +40,16 @@
 			<c:set var="grandtotal" value="${c.totalprice + grandtotal}"></c:set>
 			<a href="${remove}" class="label label-danger pull-left" ><span
 			class="glyphicon glyphicon-remove"></span>Remove</a></td>
-			<td> 
-			${msg}
+			</tr>
+			<tr>
+			<td colspan="3" class="text-right">
+			<h4>Grandtotal:  &#8377; ${grandtotal}</h4>
 			</td>
 			</tr>
 			</c:forEach>
 			</tbody>
 		</table>
-		TOTAL PRICE:${grandtotal }
+		
 	</div>
 </body>
 </html>

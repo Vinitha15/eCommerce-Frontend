@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.niit.exception.ProductNotFoundException;
-import com.niit.model.Authorities;
+import com.niit.model.Cart;
 import com.niit.model.Category;
+import com.niit.model.Customer;
 import com.niit.model.Product;
 import com.niit.service.CartItemService;
+import com.niit.service.CustomerService;
 import com.niit.service.ProductService;
 
 @Controller
@@ -35,14 +37,14 @@ public class ProductController {
 	private ProductService productservice;
 	
 	@Autowired
+	private CustomerService customerservice;
+		
+	@Autowired
 	private CartItemService cartitemservice;
 	
 	@RequestMapping("/admin/products/getproductform")
 	public String getaddproduct(Model model) 
 	{
-		User user=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username=user.getUsername();
-		
 		List<Category> categories=productservice.getallcategories();
 		model.addAttribute("categories",categories);
 		model.addAttribute("product",new Product());
@@ -75,7 +77,14 @@ public String getAllProduct(Model model)
 		{
 			List<Product> products=productservice.getallproducts();
 			model.addAttribute("product", products);
-			
+			/*if(SecurityContextHolder.getContext().getAuthentication().getPrincipal()!=null){
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = user.getUsername();
+			System.out.println(username);
+			Customer customer = customerservice.customerbyusername(username);
+			Cart cart = customer.getCart();
+			model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
+			}*/
 			return "productlist";
 		}
 
@@ -88,6 +97,12 @@ public String getproductbyid(@PathVariable int id,Model model) throws ProductNot
 	if(product==null) throw new ProductNotFoundException(); 
 	
 	model.addAttribute("product",product);
+	/*User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String username = user.getUsername();
+	System.out.println(username);
+	Customer customer = customerservice.customerbyusername(username);
+	Cart cart = customer.getCart();
+	model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));*/
 	return "viewproduct";
 	
 }
@@ -125,7 +140,12 @@ public String selectbycategory(@RequestParam String searchCondition,Model model)
 		model.addAttribute("searchCondition","");
 	else
 	model.addAttribute("searchCondition",searchCondition);
-	
+	/*User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String username = user.getUsername();
+	System.out.println(username);
+	Customer customer = customerservice.customerbyusername(username);
+	Cart cart = customer.getCart();
+	model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));*/
 	return "productlist";
 }
 

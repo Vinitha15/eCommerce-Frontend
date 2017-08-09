@@ -1,10 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
 <%@ include file="header.jsp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>Login page</title>
 <style type="text/css">
 body {
@@ -54,8 +50,7 @@ body {
 	color:red;
 }
 </style>
-</head>
-<body>
+
 
 
 	<c:url value="/j_spring_security_check" var="action"></c:url>
@@ -63,9 +58,9 @@ body {
 
 			<center><h3 style="color:white;">Login</h3> </center>
 			<br>
-			<label for="Username">USER NAME</label>
+			<label for="Username"><span class="glyphicon glyphicon-user"> USER NAME</span></label>
 			<input type="text"  name="j_username"  placeholder="Username">
-			<label for="Password">PASSWORD</label>
+			<label for="Password"><span class="glyphicon glyphicon-lock"> PASSWORD</span></label>
 			<input type="password"  name="j_password"  placeholder="password">
 			<br>
 			<button type="submit" class="btn btn-success center-block" >Login</button>
@@ -78,5 +73,5 @@ body {
 			<br>
 			<br>
 	</form:form> 
-</body>
-</html>
+
+<%@ include file="footer.jsp" %>

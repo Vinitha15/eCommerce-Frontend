@@ -3,7 +3,29 @@
 <%@ include file="header.jsp" %>
 <%@ page isELIgnored="false" %>
 <jsp:useBean id="now" class="java.util.Date" />
+<style>
+h4{
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+color:black;
+text-align: center;
+}
+strong{
+color:blue;
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+}
+p{
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+}
+.f{
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+}
+.page-header{
+margin-top: 1px;
+text-align: center;
+color: black;
 
+}
+</style>
 <div class="container-wrapper">
     <div class="container">
         <div class="page-header">
@@ -12,13 +34,13 @@
 
         <div class="container">
         <c:url value="/cart/confirm" var="url"></c:url>
-<form:form action="${url }" modelAttribute="order">
+<form:form action="${url}" modelAttribute="order">
             <div class="row">
 
-                             <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+                       <div class="col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
 
                        <div class="txt-center">
-                            <h1>Summary</h1>
+                            <h4>Summary</h4>
                        </div>
                        ORDER ID: ${order.id }
                   
@@ -34,7 +56,8 @@
                                 </address>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                <p>Shipping Date: <fmt:formatDate type="date" value="${now}" /></p>
+                                <p>Shipping Date:&nbsp&nbsp&nbsp <fmt:formatDate type="date" value="${now}" />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+                                <p>Delivery Date:&nbsp&nbsp&nbsp ${delivery }</p>
                             </div>
                         </div>
 
@@ -55,38 +78,39 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <td>Product</td>
-                                        <td>Quantity</td>
-                                        <td class="text-center">Price</td>
-                                        <td class="text-center">Total</td>
+                                        <td class ="f">Product</td>
+                                        <td class ="f">Quantity</td>
+                                        <td class ="f" class="text-center">Price</td>
+                                        <td class ="f" class="text-center" style="text-align: center">Total</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <c:set var="grandTotal" value="0.0"></c:set>
                                 <c:forEach var="cartItem" items="${order.cart.cartitems}">
                                     <tr>
-                                        <td class="col-md-9"><em>${cartItem.products.productName}</em></td>
-                                        <td class="col-md-1" style="text-align: center">${cartItem.quantity}</td>
-                                        <td class="col-md-1" style="text-align: center">${cartItem.products.price}</td>
-                                        <td class="col-md-1" style="text-align: center">${cartItem.totalprice}</td>
+                                    	<c:url value="/resources/images/${cartItem.products.id}.png" var="image"></c:url>
+									    <td class="col-md-8" class ="f"><img src="${image}" height="50" width="50" />${cartItem.products.productName}</td>
+                                        <td class="col-md-1" class ="f" style="text-align: center">${cartItem.quantity}</td>
+                                        <td class="col-md-1" class ="f" style="text-align: center">${cartItem.products.price}</td>
+                                        <td class="col-md-2" class ="f" style="text-align: center">${cartItem.totalprice}</td>
                                         <c:set var="grandTotal" value="${grandtotal + cartItem.totalprice }"></c:set>
                                     </tr>
                                 </c:forEach>
 
                                 <tr>
                                     <td></td>
-                                    <td></td>
-                                    <td class="text-right">
-                                        <h4><strong>Grand Total:</strong></h4>
+                                    
+                                    <td colspan="2" class="text-center" class ="f">
+                                        Grand Total:
                                     </td>
-                                    <td class="text-center text-danger">
-                                        <h4><strong>$ ${grandTotal}</strong></h4>
+                                    <td class="text-center text-danger" class ="f">
+                                        &#8377; ${grandTotal}
                                     </td>
                                 </tr>
 
                                 </tbody>
                             </table>
-                            <input type="submit" value="submit">
+                           <button type="submit" class="btn btn-success center-block" >Order</button>
                         </div>
 
 

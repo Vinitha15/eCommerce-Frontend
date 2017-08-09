@@ -108,12 +108,6 @@
 								<b><p class="proname">${product.productName}</p></b>
 								<p class="proprice">&#8377; ${product.price}</p>
 							</div>
-							<%-- <div class="back face center">
-								<p class="proname">${product.productName}</p>
-								
-								<c:url value="/productdescription?id=${product.id}" var="url"></c:url>
-								<p><a href="${url}"><button type="submit" class="btn btn-warning btn-md"><span class="glyphicon glyphicon-eye-open"></span>View</button></a></p>
-							</div> --%>
 						</div>
 					</div>
 				</div>

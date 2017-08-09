@@ -6,7 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Browse Products</title>
-
+<style>
+body{
+height:700px;
+}
+</style>
 <script>
 	$(document).ready(function(){
 		var searchCondition=  '${searchCondition}';

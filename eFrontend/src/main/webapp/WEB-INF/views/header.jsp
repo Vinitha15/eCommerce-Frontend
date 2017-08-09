@@ -201,5 +201,3 @@ nav a:hover {
 		</div>
 	</div>
 	</nav>
-</body>
-</html>

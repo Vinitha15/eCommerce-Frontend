@@ -87,6 +87,22 @@ public class CartController {
 		Customer customer = customerservice.customerbyusername(username);
 		Cart cart = customer.getCart();
 		System.out.println(cart.getCartitems().size());
+		List<CartItem> cartitems = cart.getCartitems();
+		for (CartItem cartitem : cartitems) {
+			if(cartitem.getProducts().getId()==id){
+				cartitem.setQuantity(cartitem.getQuantity()+1);
+				cartitem.setTotalprice(product.getPrice()*cartitem.getQuantity());
+				product.setQuantity(product.getQuantity()-1);
+				productservice.saveproduct(product);
+				cartitemservice.addtocart(cartitem);
+				model.addAttribute("units", cartitem.getQuantity());
+				if (product.getQuantity() > 0) 
+					return "redirect:/cart/getcart";
+				else
+					return "redirect:/all/products/viewproduct/{id}";
+			}
+			
+		}
 		CartItem cartitem = new CartItem();
 		cartitem.setQuantity(1);
 		cartitem.setProducts(product);
@@ -98,10 +114,8 @@ public class CartController {
 		model.addAttribute("units", cartitem.getQuantity());
 		if (product.getQuantity() > 0) 
 			return "redirect:/cart/getcart";
-		else{
-			model.addAttribute("msg", "Out Of Stock");
-			return "redirect:/cart/getcart";
-		}
+		else 
+			return "redirect:/all/products/viewproduct/{id}";
 	}
 
 	@RequestMapping("/cart/getcart")
@@ -112,7 +126,7 @@ public class CartController {
 		Customer customer = customerservice.customerbyusername(username);
 		Cart cart = customer.getCart();
 		int i = cart.getId();
-		System.out.println(cart.getCartitems().size());
+    	System.out.println(cart.getCartitems().size());
 		System.out.println(i);
 		System.out.println(cartitemservice.getcartcount(cart.getId()));
 		model.addAttribute("i", cart);

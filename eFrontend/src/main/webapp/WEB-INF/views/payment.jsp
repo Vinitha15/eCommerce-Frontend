@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ include file="header.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,7 +11,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <title>Insert title here</title>
-<script>
+<script type="text/javascript">
+	document.getElementById('app').onclick = function() {
+		myFunction()
+	};
+	function myFunction() {
+		var x = document.getElementById('myDIV');
+		x.style.display = 'block';
+	}
 	function formCC() {
 		var cname = document.getElementById('cname');
 		var cexp = document.getElementById('cexp');
@@ -91,6 +99,12 @@ body {
 	width: 100%;
 	height: 100%;
 }
+p{
+
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+
+}
+
 .blueButton {
 	background-color: #0088BB;
 	cursor: pointer;
@@ -100,6 +114,7 @@ body {
 	padding: 9px 23px;
 	text-decoration: none;
 }
+
 .payment input[type=text] {
 	width: 95%;
 	padding: 12px 20px;
@@ -111,13 +126,16 @@ body {
 	resize: none;
 	text-align: left;
 }
+
 .payment input[type=text]:focus {
 	border: 1px solid #a8a8a8;
 }
+
 .payment input[type=submit], .payment input[type=button] {
 	float: right;
 	margin: -20px 20px 10px 0px;
 }
+
 .payment {
 	border-radius: 5px;
 	background-color: #f8f8f8;
@@ -135,24 +153,28 @@ Below is the form for the confirm order table
 	display: inline;
 	font-weight: bold;
 }
+
 .credit-card-box .form-control.error {
 	border-color: red;
 	outline: 0;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
 		rgba(255, 0, 0, 0.6);
 }
+
 .credit-card-box label.error {
 	font-weight: bold;
 	color: red;
 	padding: 2px 8px;
 	margin-top: 2px;
 }
+
 .credit-card-box .payment-errors {
 	font-weight: bold;
 	color: red;
 	padding: 2px 8px;
 	margin-top: 2px;
 }
+
 .credit-card-box label {
 	display: block;
 }
@@ -160,47 +182,57 @@ Below is the form for the confirm order table
 .credit-card-box .display-table {
 	display: table;
 }
+
 .credit-card-box .display-tr {
 	display: table-row;
 }
+
 .credit-card-box .display-td {
 	display: table-cell;
 	vertical-align: middle;
 	width: 50%;
 }
+
 .credit-card-box .panel-heading img {
 	min-width: 180px;
+}
+
+#myDIV {
+	margin-top: 20px;
+	display: none;
 }
 </style>
 </head>
 <body>
-	<form action="billingpage" class="payment" method="post"
-		onsubmit="return formCC()">
+	<center><p><b>Pay via cash or card</b></p></center>
+	<div class="container">
+	<c:url value="/cart/thankyou" var="action" />
+	<a href="${action}" class="btn btn-success pull-left">Cash On
+		Delivery</a>
+	<a onclick="myFunction()" id="app"
+		class="btn btn-success btn-default pull-right">Card</a>
+	<div id="myDIV">
+		<form action="${action}" class="payment" method="post"
+			onsubmit="return formCC()">
 
 			<div class="panel panel-default credit-card-box">
 				<div class="panel-heading display-table">
 					<div class="row display-tr">
 						<h3 class="panel-title display-td">Payment Details</h3>
-						<img class="img-responsive pull-right"
-							src="http://i76.imgup.net/accepted_c22e0.png">
 					</div>
 				</div>
 			</div>
-			<br>
-			<label for="cardNumber">CARD NUMBER</label>
-			<input type="text" size="16" id="cname" name="cardNumber"
-				placeholder="Valid Card Number">
-			<label for="cardExpir">EXPIRATION DATE</label>
-			<input type="text" size="5" id="cexp" name="cardExpiry"
-				placeholder="MM-YY">
-			<label for="cardCVC">CV CODE</label>
-			<input type="text" size="3" id="cvc" name="cardCVC" placeholder="CVC">
+			<br> <label for="cardNumber">CARD NUMBER</label> <input
+				type="text" size="16" id="cname" name="cardNumber"
+				placeholder="Valid Card Number"> <label for="cardExpir">EXPIRATION
+				DATE</label> <input type="text" size="5" id="cexp" name="cardExpiry"
+				placeholder="MM-YY"> <label for="cardCVC">CV CODE</label> <input
+				type="text" size="3" id="cvc" name="cardCVC" placeholder="CVC">
 
-			<br>
-			<input type="submit" class="blueButton" style="float: right;"
-				value="Confirm Paymet">
-			<br>
-			<br>
-	</form>
+			<br> <input type="submit" class="blueButton"
+				style="float: right;" value="Confirm Paymet"> <br> <br>
+		</form>
+	</div>
+	</div>
 </body>
 </html>

@@ -5,15 +5,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.niit.model.Cart;
 import com.niit.model.Customer;
@@ -43,12 +43,14 @@ public class CustomerOrderController {
 		Cart cart = customer.getCart();
 		model.addAttribute("shippingaddress", customer.getShippingaddress());
 		model.addAttribute("Cartid", cart.getId());
+		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
+		
 		return "shippingaddress";
 
 	}
 
 	@RequestMapping("/cart/order")
-	public String createorder(@ModelAttribute ShippingAddress shippingaddress, Model model) {
+	public String createorder(@ModelAttribute ShippingAddress shippingaddress,HttpSession session, Model model) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = user.getUsername();
 		Customer customer = customerservice.customerbyusername(username);
@@ -71,9 +73,12 @@ public class CustomerOrderController {
 		long yy = c.get(Calendar.YEAR);
 		String mm = new SimpleDateFormat("MMM").format(c.getTime());
 		String day = new SimpleDateFormat("EE").format(c.getTime());
-		System.out.println(day + ", " + mm + " " + dd + " " + yy);
+		String delivery=day + ", " + mm + " " + dd + " " + yy;
+		session.setAttribute("delivery",delivery);
+		session.setAttribute("username",username);
 		model.addAttribute("order", customerorder);
 		model.addAttribute("Cartid", cart.getId());
+		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
 		return "orderdetails";
 	}
 
@@ -83,12 +88,18 @@ public class CustomerOrderController {
 		String username = user.getUsername();
 		Customer customer = customerservice.customerbyusername(username);
 		Cart cart = customer.getCart();
-		cartitemservice.aftercheckout(cart.getId());
+		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
 		return "payment";
 	}
 
 	@RequestMapping("/cart/thankyou")
-	public String cash() {
+	public String cash(Model model) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		Customer customer = customerservice.customerbyusername(username);
+		Cart cart = customer.getCart();
+		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
+		cartitemservice.aftercheckout(cart.getId());
 		return "thankyou";
 	}
 
