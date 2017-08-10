@@ -40,11 +40,7 @@ public class CustomerOrderController {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = user.getUsername();
 		Customer customer = customerservice.customerbyusername(username);
-		Cart cart = customer.getCart();
 		model.addAttribute("shippingaddress", customer.getShippingaddress());
-		model.addAttribute("Cartid", cart.getId());
-		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
-		
 		return "shippingaddress";
 
 	}
@@ -60,7 +56,7 @@ public class CustomerOrderController {
 		CustomerOrder customerorder = customerorderservice.Createorder(cart);
 		String pattern = "dd-MM-yyyy";
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		Date date = customerorder.getDate();
+		Date date = new Date();
 		Random rand = new Random();
 		int i = 2 + rand.nextInt(3);
 		System.out.println(i);
@@ -78,17 +74,11 @@ public class CustomerOrderController {
 		session.setAttribute("username",username);
 		model.addAttribute("order", customerorder);
 		model.addAttribute("Cartid", cart.getId());
-		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
 		return "orderdetails";
 	}
 
 	@RequestMapping("/cart/confirm")
-	public String confirm(@ModelAttribute CustomerOrder customerorder, Model model) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = user.getUsername();
-		Customer customer = customerservice.customerbyusername(username);
-		Cart cart = customer.getCart();
-		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
+	public String confirm() {
 		return "payment";
 	}
 
@@ -98,7 +88,6 @@ public class CustomerOrderController {
 		String username = user.getUsername();
 		Customer customer = customerservice.customerbyusername(username);
 		Cart cart = customer.getCart();
-		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
 		cartitemservice.aftercheckout(cart.getId());
 		return "thankyou";
 	}

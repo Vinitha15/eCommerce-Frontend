@@ -2,6 +2,8 @@ package com.niit.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -119,18 +121,19 @@ public class CartController {
 	}
 
 	@RequestMapping("/cart/getcart")
-	public String getcart(Model model) {
+	public String getcart(HttpSession session,Model model) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = user.getUsername();
 		System.out.println(username);
 		Customer customer = customerservice.customerbyusername(username);
+		System.out.println(customer.getEmail());
 		Cart cart = customer.getCart();
 		int i = cart.getId();
     	System.out.println(cart.getCartitems().size());
 		System.out.println(i);
 		System.out.println(cartitemservice.getcartcount(cart.getId()));
 		model.addAttribute("i", cart);
-		model.addAttribute("count", cartitemservice.getcartcount(cart.getId()));
+		session.setAttribute("count", cartitemservice.getcartcount(cart.getId()));
 		return "cart";
 	}
 

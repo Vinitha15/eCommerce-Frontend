@@ -11,7 +11,10 @@ body {
 	height: 100%;
 	color:white;
 }
-
+a{
+font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+	
+}
 .log input {
 	width: 95%;
 	padding: 12px 20px;
@@ -63,6 +66,8 @@ body {
 			<label for="Password"><span class="glyphicon glyphicon-lock"> PASSWORD</span></label>
 			<input type="password"  name="j_password"  placeholder="password">
 			<br>
+			<c:url value="/all/RegistrationForm" var="register"></c:url>
+			<u><a href="${register}">New User?</a></u><br>
 			<button type="submit" class="btn btn-success center-block" >Login</button>
 				 <c:if test="${not empty error}">
 				<div class="error"><b>${error}</b></div>
