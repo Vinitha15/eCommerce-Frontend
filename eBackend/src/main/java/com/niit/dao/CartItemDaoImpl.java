@@ -53,7 +53,7 @@ public class CartItemDaoImpl implements CartItemDao{
 		List<CartItem> cartitems= cart.getCartitems();
 		for(CartItem cartitem: cartitems)
 			session.delete(cartitem);
-		
+			/*int q=cartitem.getQuantity();*/
 	}
 
 	public int getcartcount(int id) {
