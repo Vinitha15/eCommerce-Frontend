@@ -48,11 +48,11 @@ color: black;
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <address>
                                     <strong>Shipping Address</strong><br/>
-                                    ${order.cart.customer.shippingaddress.streetname}
+                                    ${order.shippingaddress.streetname}
                                 <br/>
-                                    ${order.cart.customer.shippingaddress.city}, ${order.cart.customer.shippingaddress.state}
+                                    ${order.shippingaddress.city}, ${order.shippingaddress.state}
                                 <br/>
-                                     ${order.cart.customer.shippingaddress.country}, ${order.cart.customer.shippingaddress.zipcode}
+                                     ${order.shippingaddress.country}, ${order.shippingaddress.zipcode}
                                 </address>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 text-right">

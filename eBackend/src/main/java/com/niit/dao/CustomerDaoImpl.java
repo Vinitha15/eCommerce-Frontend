@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.niit.model.Authorities;
 import com.niit.model.Cart;
 import com.niit.model.Customer;
+import com.niit.model.ShippingAddress;
 import com.niit.model.User;
 @Repository
 public class CustomerDaoImpl implements CustomerDao{
@@ -29,6 +30,15 @@ public class CustomerDaoImpl implements CustomerDao{
 		Cart cart=new Cart();
 		cart.setCustomer(customer);
 		customer.setCart(cart);
+		ShippingAddress s= new ShippingAddress();
+		s.setDoorno(customer.getBillingaddress().getDoorno());
+		s.setStreetname(customer.getBillingaddress().getStreetname());
+		s.setCity(customer.getBillingaddress().getCity());
+		s.setState(customer.getBillingaddress().getState());
+		s.setCountry(customer.getBillingaddress().getCountry());
+		s.setZipcode(customer.getBillingaddress().getZipcode());
+		s.setCustomer(customer);
+		session.save(s);
 		session.save(customer);
 	}
 	public User validateUsername(String username) {

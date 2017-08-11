@@ -57,7 +57,7 @@ return true;
 			<tr>
 				<td><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-user"> USER DETAILS</span></button></td>
 				<td><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-home"> BILLING ADDRESS</span></button></td>
-				<td><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-home"> SHIPPING ADDRESS</span></button></td>
+				<!-- <td><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-home"> SHIPPING ADDRESS</span></button></td> -->
 			</tr>
 		</thead>
 		<tbody>
@@ -136,7 +136,7 @@ return true;
 				
 		
 		</td>
-		<td>
+		<%-- <td>
 				
 					<div class="form-group">
 						<form:input path="shippingaddress.doorno" placeholder="Door no" id="d1"/>
@@ -166,24 +166,23 @@ return true;
 					</div>
 				
 				
-		</td>
+		</td> --%>
 		</tr>
 		</tbody>
-		<tr>
-		<td></td>
-		<td>
+		</table>
+		
 			<div class="form-group">
 					
-					<button type="submit" class="btn btn-warning" onclick="return Validate()">
+				<center>	<button type="submit" class="btn btn-warning" onclick="return Validate()">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span
 							class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 					</button>
-				</div>
-		</td>
-		<td></td>
+					</center>
+			</div>
 		
-		</tr>
-				</table>
+		
+		
+				
 				
 				
 			</form:form>

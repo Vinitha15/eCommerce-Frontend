@@ -1,5 +1,8 @@
 package com.niit.model;
 
+
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -37,10 +41,8 @@ public class Customer {
 	@JoinColumn(name = "billingaddress_id")
 	@Valid
 	private BillingAddress billingaddress;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "shippingaddress_id")
-	@Valid
-	private ShippingAddress shippingaddress;
+	@OneToMany(mappedBy="customer",cascade = CascadeType.ALL)
+	private List<ShippingAddress> shippingaddress;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cart_id")
 	@Valid
@@ -102,11 +104,13 @@ public class Customer {
 		this.billingaddress = billingaddress;
 	}
 
-	public ShippingAddress getShippingaddress() {
+	
+
+	public List<ShippingAddress> getShippingaddress() {
 		return shippingaddress;
 	}
 
-	public void setShippingaddress(ShippingAddress shippingaddress) {
+	public void setShippingaddress(List<ShippingAddress> shippingaddress) {
 		this.shippingaddress = shippingaddress;
 	}
 

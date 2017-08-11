@@ -7,20 +7,66 @@
 <title>Insert title here</title>
 <style type="text/css">
 .row {
-	margin-top: 100px;
+	margin-top: 50px;
 }
-.page-header{
-margin-top: 1px;
-text-align: center;
-color: black;
+
+.page-header {
+	margin-top: 1px;
+	text-align: center;
+	color: black;
+}
+#myDIV {
+	margin-top: 100px;
+	display: none;
 }
 </style>
+<script type="text/javascript">
+document.getElementById('app').onclick = function() {
+	myFunction()
+};
+function myFunction() {
+	var x = document.getElementById('myDIV');
+	x.style.display = 'block';
+}
+</script>
 </head>
 <body>
 	<div class="container">
-		<c:url value="/cart/order" var="action"></c:url>
-		<form:form action="${action}" method="post"
-			modelAttribute="shippingaddress">
+		<div class="row">
+
+			<div
+				class="col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+
+				<div class="txt-center">
+					<h4>List Of Addresses</h4>
+				</div>
+				<c:forEach items="${shipping}" var="s">
+
+				<div class="row"> 
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						<address>
+							<strong>Shipping Address</strong><br />
+							${s.doorno},
+							${s.streetname} <br />
+							${s.city},
+							${s.state} <br />
+							${s.country}-
+							${s.zipcode}
+						</address>
+					</div>
+					 <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+					 			 <c:url value="/cart/order/${s.id}" var="action"></c:url>
+                               <a href="${action}" class="btn btn-success pull-left">Deliver</a>
+                            </div>
+				</div>
+				</c:forEach>
+			</div>
+		</div>
+		<center><a onclick="myFunction()" id="app"
+		class="btn btn-success btn-default">Add Address</a></center>
+		<div id="myDIV">
+		 <c:url value="/cart/add/shipping" var="action"></c:url>
+		<form:form action="${action}" method="post" modelAttribute="shippingaddress">
 			<form:hidden path="id" />
 			<div class="row">
 				<div class="page-header">
@@ -76,8 +122,7 @@ color: black;
 			</div>
 		</form:form>
 	</div>
-
-	<%-- <%@ include file="footer.jsp"%> --%>
+ </div>
 
 
 </body>

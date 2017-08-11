@@ -3,6 +3,7 @@ package com.niit.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.niit.model.Cart;
@@ -40,20 +42,25 @@ public class CustomerOrderController {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = user.getUsername();
 		Customer customer = customerservice.customerbyusername(username);
-		model.addAttribute("shippingaddress", customer.getShippingaddress());
+		int id=customer.getId();
+		System.out.println(id);
+		List<ShippingAddress> shipping= customerorderservice.getshippingbyid(id);
+		System.out.println(shipping.size());
+		model.addAttribute("shipping", shipping);
+		model.addAttribute("shippingaddress", new ShippingAddress());
 		return "shippingaddress";
 
 	}
 
-	@RequestMapping("/cart/order")
-	public String createorder(@ModelAttribute ShippingAddress shippingaddress,HttpSession session, Model model) {
+	@RequestMapping("/cart/order/{id}")
+	public String createorder(@ModelAttribute ShippingAddress shippingaddress,HttpSession session, Model model,@PathVariable int id) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = user.getUsername();
 		Customer customer = customerservice.customerbyusername(username);
 		Cart cart = customer.getCart();
-		customer.setShippingaddress(shippingaddress);
+		ShippingAddress s=customerorderservice.getshipping(id);
 		cart.setCustomer(customer);
-		CustomerOrder customerorder = customerorderservice.Createorder(cart);
+		CustomerOrder customerorder = customerorderservice.Createorder(cart,s);
 		String pattern = "dd-MM-yyyy";
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		Date date = new Date();
